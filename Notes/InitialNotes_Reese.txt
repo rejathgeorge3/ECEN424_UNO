@@ -1,0 +1,70 @@
+Server needs to track game state for all of the clients
+
+Clients connect during a 'lobby' period
+	could have this based on time, number of players, etc.
+		set max players to 10
+		Just say that once 3 players join, wait another 15 seconds after the last player, then start the game
+			reset timer every time a player joins
+	first person to join starts the game
+	finalize size of thread list once the game starts
+		open it back up once the game ends
+	
+		
+Not keeping track of a limited deck; assume it is infinite and distribute cards based on probability
+	generate a random number between 0 and 107 (108 cards in deck)
+		need a function that uses a vector/table so that a number input to it grabs the appropriate card
+		Game-master implements this
+
+server has set of threads (1 for each client, and another for doing the actual processing?)
+
+Only want one client to be able to play at a time
+	
+set a loop that goes until someone runs out of cards
+
+Game state
+	for the game in general, this tracks who is to play and what card is on the top of the deck
+		this has to be provided to each player
+		when player(s) gets to 1 card, the game state needs to display that player x is at Uno
+	for each player, they have a more specific game state i.e. the hand of cards they have
+	GS could be an object, probably have several moving parts behind the scenes
+		process GS into a string that should be shown
+	GS must be accesed from multiple threads, so this needs to be properly synchronized
+		the string idea may be helpful here; only GM thread should change the GS, clients should only read from it
+
+
+***Flow:
+	At start of game, transmit game state to each person
+	
+	first player to connect goes first	
+		default order is connection order (obviously reverse card changes this)
+		
+	a card is shown, and they must type in a card in their hand to player	
+		once it is a players turn, unlock their game i.e. set a scanner to wait for their input
+		cards will be shown in ascii using a shorthand for each card name
+			ie |color,type| 
+				e.g. |R,5| for red 5, |W,D4| for wild card draw 4, 
+				will need to provide a small help dialog as reference (readme file)
+					maybe send this as a short message on the side
+		When they play a card, have (at least) the server check if a valid card was played
+			could also have the client check this, but server is master and should still check to be robust
+			valid means the card is:
+				a possible card they could have e.g. NOT a Pink 2 or Red 15
+				in their hand
+				valid based on the card on top of the deck
+		after a valid card is played, server calculates what should happen
+			change game state object accordingly
+			if not valid, poll the current player again to get a valid play
+			
+	After current players turn, game master thread processes what happened and changes state of the game
+		e.g. If someone played draw 2, that person has 2 cards added to their deck, and then the subsequent player starts their turn
+		alter players hands, change direction of play (if reverse played), generate strings, and send game state to each player
+		
+		
+		
+May happen that someone gets a ton of cards in their hands
+	probably every X cards, make a new line for them to play on
+		assume their terminal is sufficiently wide to not be a problem for our formatting
+				
+				
+			
+	
