@@ -59,11 +59,23 @@ Game state
 		e.g. If someone played draw 2, that person has 2 cards added to their deck, and then the subsequent player starts their turn
 		alter players hands, change direction of play (if reverse played), generate strings, and send game state to each player
 		
+	If a player cannot play anything valid, they must draw a card
+		if the card is a valid card, it is automatically player
+			otherwise, they keep that new card
+		After the player has drawn (and potentially played that card), go to the next player's turn
 		
+	If a player has one card left, announce that they have uno along with the game state	
+		print which players have uno at the start of each turn
+		ignore the rule requiring the player to say uno; keep it simple and assume they did
+		
+	Once a player wins, let everyone know that they won, thank them for playing, and disconnect all sockets before closing the program
+		Otherwise, we need to reopen the lobbying period; and the game becomes more complicated
+			it is doable, but probably better to keep the game simple
 		
 May happen that someone gets a ton of cards in their hands
 	probably every X cards, make a new line for them to play on
 		assume their terminal is sufficiently wide to not be a problem for our formatting
+		Every 7 cards, since they start with this many
 				
 				
 			
