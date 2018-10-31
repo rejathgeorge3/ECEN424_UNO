@@ -9,12 +9,41 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
+
+        /**
+         * Do basic testing here!!!
+         */
+        String f = "|Z,1|";
+        if (Card.isValid(f)) {
+            Card c = new Card(f);
+
+            System.out.println("color of card is " + c.getColor());
+            System.out.println("value of card is " + c.getValueStr());
+        }
+        else System.out.println("not valid:  "+f);
+
+        Card c = new Card("|G,D2|");
+        System.out.println("color of card is " + c.getColor());
+        System.out.println("value of card is " + c.getValueStr());
+
+        //comment out to run normally
+        boolean t = true;
+        if (t) return;
+
+        /**
+         * End basic testing
+         */
+
+
+        /**
+         * Run the actual game's server here
+         */
         try {
             final ServerSocket serverSocket = new ServerSocket(4571);
 
 
             /* Setup threads for each player */
-            
+
             //max of ten players
             ArrayList<Player> players = new ArrayList<>(10);
 
