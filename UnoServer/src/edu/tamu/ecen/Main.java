@@ -12,7 +12,7 @@ public class Main {
 
         /**
          * Do basic testing here!!!
-         */
+         */ 
         String f = "|Z,1|";
         if (Card.isValid(f)) {
             Card c = new Card(f);
