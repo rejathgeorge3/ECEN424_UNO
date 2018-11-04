@@ -35,3 +35,4 @@ Game-Master
   - listen to from server for acceptance of card player
     - if refused, reopen scanner and send again
     - if accepted, wait for next normal game state
+ 
